@@ -1,36 +1,36 @@
-// West Point High School: Navy & Gold
+// West Point High School: Royal Blue & Orange
 // Clean, professional, Buffett-disciplined aesthetic
 
 export const C = {
-  // Backgrounds
-  bg: '#0a1628',
-  surface: '#0f1d32',
-  surfaceAlt: '#142440',
-  card: '#162a4a',
+  // Backgrounds — deep blue-black with subtle school blue undertone
+  bg: '#080e1e',
+  surface: '#0d1529',
+  surfaceAlt: '#121c34',
+  card: '#162240',
 
   // Borders
-  border: '#1e3a5f',
-  borderHi: '#2a4f7a',
+  border: '#1c2d52',
+  borderHi: '#263d6a',
 
-  // Text
-  text: '#e8edf5',
-  textDim: '#8896aa',
-  muted: '#5a6a80',
+  // Text — brighter white for readability on dark bg
+  text: '#f5f7fa',
+  textDim: '#9aa5b8',
+  muted: '#5e6f88',
 
-  // Brand — West Point Navy & Gold
-  navy: '#1a3a6b',
-  gold: '#d4a843',
-  goldLight: '#e8c96a',
-  goldDim: '#a08030',
+  // Brand — West Point Royal Blue & Orange
+  navy: '#1b2a7d',
+  gold: '#e8762a',       // school orange as primary accent
+  goldLight: '#f09040',
+  goldDim: '#c05e18',
 
   // Functional
   green: '#22c55e',
   red: '#ef4444',
-  blue: '#3b82f6',
+  blue: '#3b6fe8',       // shifted toward school blue
   amber: '#f59e0b',
 
   // Accent
-  accent: '#d4a843',
+  accent: '#e8762a',
 };
 
 export const font = {
