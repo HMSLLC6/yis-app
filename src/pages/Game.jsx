@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { C, font } from '../theme';
 import { shuffleQuestions } from '../data/questions';
 import { CONCEPT_MAP, MODULES } from '../data/concepts';
+import bullSvg from '../assets/bull.svg';
+import bearSvg from '../assets/bear.svg';
 
 const ROUND_SIZE = 10;
 
@@ -99,25 +101,13 @@ export default function Game() {
       <div style={s.page}>
         <div style={s.startScreen} className="fade-in">
           <div style={s.gameIcon}>
-            {/* Bull — minimal head outline: horns + tapered face */}
             <div style={s.iconCol}>
-              <svg width="52" height="52" viewBox="0 0 52 52" fill="none" stroke={C.green} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M10 12 L6 4" />
-                <path d="M42 12 L46 4" />
-                <path d="M10 12 C10 12 8 20 10 28 C12 36 18 42 26 42 C34 42 40 36 42 28 C44 20 42 12 42 12" />
-                <path d="M10 12 C14 10 20 9 26 9 C32 9 38 10 42 12" />
-              </svg>
+              <img src={bullSvg} alt="Bull" style={{ width: 64, height: 64, filter: 'brightness(0) invert(1)', opacity: 0.85 }} />
               <span style={s.bull}>Bull</span>
             </div>
             <span style={s.or}>or</span>
-            {/* Bear — minimal head outline: round ears + broad face */}
             <div style={s.iconCol}>
-              <svg width="52" height="52" viewBox="0 0 52 52" fill="none" stroke={C.red} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="11" cy="11" r="6" />
-                <circle cx="41" cy="11" r="6" />
-                <path d="M8 18 C8 18 6 28 10 36 C14 44 20 46 26 46 C32 46 38 44 42 36 C46 28 44 18 44 18" />
-                <path d="M8 18 C12 14 18 12 26 12 C34 12 40 14 44 18" />
-              </svg>
+              <img src={bearSvg} alt="Bear" style={{ width: 64, height: 64, filter: 'brightness(0) invert(1)', opacity: 0.85 }} />
               <span style={s.bear}>Bear</span>
             </div>
           </div>
