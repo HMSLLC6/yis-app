@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { C, font } from '../theme';
 import { shuffleQuestions } from '../data/questions';
 import { CONCEPT_MAP, MODULES } from '../data/concepts';
-import bullImg from '../assets/bull.png';
-import bearImg from '../assets/bear.png';
 
 const ROUND_SIZE = 10;
 
@@ -101,15 +99,9 @@ export default function Game() {
       <div style={s.page}>
         <div style={s.startScreen} className="fade-in">
           <div style={s.gameIcon}>
-            <div style={s.iconCol}>
-              <img src={bullImg} alt="Bull" style={s.animalImg} />
-              <span style={s.bull}>Bull</span>
-            </div>
+            <span style={s.bull}>Bull</span>
             <span style={s.or}>or</span>
-            <div style={s.iconCol}>
-              <img src={bearImg} alt="Bear" style={s.animalImg} />
-              <span style={s.bear}>Bear</span>
-            </div>
+            <span style={s.bear}>Bear</span>
           </div>
           <p style={s.startDesc}>
             A headline flashes. You decide: does the market go up or down?
@@ -316,40 +308,26 @@ const s = {
   },
   gameIcon: {
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'baseline',
     justifyContent: 'center',
-    gap: 20,
-    marginBottom: 20,
-  },
-  iconCol: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: 6,
-  },
-  animalImg: {
-    width: 80,
-    height: 80,
-    objectFit: 'contain',
-    filter: 'invert(1)',
-    mixBlendMode: 'screen',
+    gap: 10,
+    marginBottom: 16,
   },
   bull: {
     fontFamily: font.heading,
-    fontSize: 28,
+    fontSize: 36,
     fontWeight: 700,
     color: C.green,
   },
   or: {
     fontFamily: font.heading,
-    fontSize: 18,
+    fontSize: 20,
     fontStyle: 'italic',
     color: C.muted,
-    paddingTop: 20,
   },
   bear: {
     fontFamily: font.heading,
-    fontSize: 28,
+    fontSize: 36,
     fontWeight: 700,
     color: C.red,
   },
