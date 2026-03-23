@@ -14,6 +14,7 @@ export default function ConceptDetail() {
   const cameFromModule = cameFrom ? MODULES.find(m => m.id === cameFrom.module) : null;
   // Only show the "return" banner if they jumped to a different module
   const showReturn = cameFrom && concept && cameFrom.module !== concept.module;
+  const fromGlossary = location.state?.fromGlossary;
 
   // Get all concepts in this module, in order
   const moduleConcepts = useMemo(() => {
@@ -56,12 +57,21 @@ export default function ConceptDetail() {
     <div style={s.page}>
       {/* Top bar: back + progress */}
       <div style={s.topBar}>
-        <button style={s.back} onClick={() => navigate(`/learn/${concept.module}`)}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={C.textDim} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="15 18 9 12 15 6" />
-          </svg>
-          {module?.title || 'Back'}
-        </button>
+        {fromGlossary ? (
+          <button style={s.back} onClick={() => navigate('/glossary')}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={C.textDim} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+            Glossary
+          </button>
+        ) : (
+          <button style={s.back} onClick={() => navigate(`/learn/${concept.module}`)}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={C.textDim} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+            {module?.title || 'Back'}
+          </button>
+        )}
         <span style={{ ...s.pageNum, color: module?.color || C.muted }}>
           {currentIndex + 1} / {total}
         </span>

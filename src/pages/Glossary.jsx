@@ -115,7 +115,7 @@ export default function Glossary() {
               <button
                 key={concept.id}
                 style={s.glossaryItem}
-                onClick={() => navigate(`/concept/${concept.id}`)}
+                onClick={() => navigate(`/concept/${concept.id}`, { state: { fromGlossary: true } })}
               >
                 <div style={s.itemLeft}>
                   <h3 style={s.itemTerm}>{concept.term}</h3>
