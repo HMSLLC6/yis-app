@@ -21,139 +21,73 @@ export const SP500_ANNUAL_RETURNS = {
   2025: 0.0200,  // partial year estimate through Q1
 };
 
-// Monthly S&P 500 index levels (approximate close) for more granular birthday calculation
-// First of each month, 2000-2025
-export const SP500_MONTHLY = [
-  // 2000
-  { date: '2000-01-01', value: 1469.25 }, { date: '2000-04-01', value: 1498.58 },
-  { date: '2000-07-01', value: 1454.60 }, { date: '2000-10-01', value: 1429.40 },
-  // 2001
-  { date: '2001-01-01', value: 1320.28 }, { date: '2001-04-01', value: 1160.33 },
-  { date: '2001-07-01', value: 1211.23 }, { date: '2001-10-01', value: 1059.78 },
-  // 2002
-  { date: '2002-01-01', value: 1148.08 }, { date: '2002-04-01', value: 1147.39 },
-  { date: '2002-07-01', value: 989.82 }, { date: '2002-10-01', value: 885.76 },
-  // 2003
-  { date: '2003-01-01', value: 879.82 }, { date: '2003-04-01', value: 848.18 },
-  { date: '2003-07-01', value: 990.31 }, { date: '2003-10-01', value: 1050.71 },
-  // 2004
-  { date: '2004-01-01', value: 1131.13 }, { date: '2004-04-01', value: 1126.21 },
-  { date: '2004-07-01', value: 1101.72 }, { date: '2004-10-01', value: 1130.20 },
-  // 2005
-  { date: '2005-01-01', value: 1181.27 }, { date: '2005-04-01', value: 1180.59 },
-  { date: '2005-07-01', value: 1234.18 }, { date: '2005-10-01', value: 1207.01 },
-  // 2006
-  { date: '2006-01-01', value: 1248.29 }, { date: '2006-04-01', value: 1294.87 },
-  { date: '2006-07-01', value: 1270.20 }, { date: '2006-10-01', value: 1377.94 },
-  // 2007
-  { date: '2007-01-01', value: 1418.30 }, { date: '2007-04-01', value: 1420.86 },
-  { date: '2007-07-01', value: 1503.35 }, { date: '2007-10-01', value: 1549.38 },
-  // 2008
-  { date: '2008-01-01', value: 1468.36 }, { date: '2008-04-01', value: 1322.70 },
-  { date: '2008-07-01', value: 1280.00 }, { date: '2008-10-01', value: 968.75 },
-  // 2009
-  { date: '2009-01-01', value: 903.25 }, { date: '2009-04-01', value: 797.87 },
-  { date: '2009-07-01', value: 987.48 }, { date: '2009-10-01', value: 1057.08 },
-  // 2010
-  { date: '2010-01-01', value: 1115.10 }, { date: '2010-04-01', value: 1169.43 },
-  { date: '2010-07-01', value: 1030.71 }, { date: '2010-10-01', value: 1183.26 },
-  // 2011
-  { date: '2011-01-01', value: 1257.62 }, { date: '2011-04-01', value: 1325.83 },
-  { date: '2011-07-01', value: 1292.28 }, { date: '2011-10-01', value: 1253.30 },
-  // 2012
-  { date: '2012-01-01', value: 1257.60 }, { date: '2012-04-01', value: 1408.47 },
-  { date: '2012-07-01', value: 1362.16 }, { date: '2012-10-01', value: 1412.16 },
-  // 2013
-  { date: '2013-01-01', value: 1426.19 }, { date: '2013-04-01', value: 1569.19 },
-  { date: '2013-07-01', value: 1685.73 }, { date: '2013-10-01', value: 1756.54 },
-  // 2014
-  { date: '2014-01-01', value: 1848.36 }, { date: '2014-04-01', value: 1872.34 },
-  { date: '2014-07-01', value: 1930.67 }, { date: '2014-10-01', value: 2018.05 },
-  // 2015
-  { date: '2015-01-01', value: 2058.90 }, { date: '2015-04-01', value: 2067.89 },
-  { date: '2015-07-01', value: 2103.84 }, { date: '2015-10-01', value: 2079.36 },
-  // 2016
-  { date: '2016-01-01', value: 2043.94 }, { date: '2016-04-01', value: 2059.74 },
-  { date: '2016-07-01', value: 2098.86 }, { date: '2016-10-01', value: 2168.27 },
-  // 2017
-  { date: '2017-01-01', value: 2238.83 }, { date: '2017-04-01', value: 2362.72 },
-  { date: '2017-07-01', value: 2470.30 }, { date: '2017-10-01', value: 2575.26 },
-  // 2018
-  { date: '2018-01-01', value: 2673.61 }, { date: '2018-04-01', value: 2640.87 },
-  { date: '2018-07-01', value: 2816.29 }, { date: '2018-10-01', value: 2711.74 },
-  // 2019
-  { date: '2019-01-01', value: 2506.85 }, { date: '2019-04-01', value: 2834.40 },
-  { date: '2019-07-01', value: 2980.38 }, { date: '2019-10-01', value: 3037.56 },
-  // 2020
-  { date: '2020-01-01', value: 3225.52 }, { date: '2020-04-01', value: 2584.59 },
-  { date: '2020-07-01', value: 3100.29 }, { date: '2020-10-01', value: 3363.00 },
-  // 2021
-  { date: '2021-01-01', value: 3714.24 }, { date: '2021-04-01', value: 3972.89 },
-  { date: '2021-07-01', value: 4395.26 }, { date: '2021-10-01', value: 4357.04 },
-  // 2022
-  { date: '2022-01-01', value: 4766.18 }, { date: '2022-04-01', value: 4530.41 },
-  { date: '2022-07-01', value: 3785.38 }, { date: '2022-10-01', value: 3871.98 },
-  // 2023
-  { date: '2023-01-01', value: 3839.50 }, { date: '2023-04-01', value: 4109.31 },
-  { date: '2023-07-01', value: 4450.38 }, { date: '2023-10-01', value: 4288.05 },
-  // 2024
-  { date: '2024-01-01', value: 4769.83 }, { date: '2024-04-01', value: 5254.35 },
-  { date: '2024-07-01', value: 5460.48 }, { date: '2024-10-01', value: 5762.48 },
-  // 2025
-  { date: '2025-01-01', value: 5881.63 }, { date: '2025-03-01', value: 5954.50 },
-];
-
 // Historical average annual return (used for projections)
 export const HISTORICAL_AVG_RETURN = 0.1026; // ~10.26% average since 1950
-export const HISTORICAL_MEDIAN_RETURN = 0.1315;
-export const INFLATION_AVG = 0.031; // ~3.1% average inflation
 
-// Calculate growth of an investment from a start date to today using quarterly data
+// Calculate growth of an investment from a start date to today
+// Uses actual year-by-year S&P 500 total returns (dividends reinvested)
 export function calculateGrowth(startDate, amount) {
   const start = new Date(startDate);
   const now = new Date();
+  const startYear = start.getFullYear();
+  const currentYear = now.getFullYear();
 
-  // Find the nearest quarterly data point at or after start date
-  let startIdx = SP500_MONTHLY.findIndex(p => new Date(p.date) >= start);
-  if (startIdx === -1) return null; // date too recent or not in range
+  // Validate: must be within our data range and not in the future
+  if (startYear < 1950 || start > now) return null;
 
-  const startValue = SP500_MONTHLY[startIdx].value;
-  const endValue = SP500_MONTHLY[SP500_MONTHLY.length - 1].value;
+  const years = (now - start) / (365.25 * 24 * 60 * 60 * 1000);
+  let value = amount;
 
-  // Price return ratio
-  const priceRatio = endValue / startValue;
+  // Chart data: one point per year
+  const dataPoints = [{ year: startYear, value: Math.round(amount) }];
 
-  // Add approximate dividend return (~2% annual) for total return
-  const years = (now - new Date(SP500_MONTHLY[startIdx].date)) / (365.25 * 24 * 60 * 60 * 1000);
-  const dividendMultiplier = Math.pow(1.02, years);
+  // Partial first year: proportion of year remaining after the start date
+  const startDayOfYear = Math.floor(
+    (start - new Date(startYear, 0, 1)) / (24 * 60 * 60 * 1000)
+  );
+  const daysInStartYear = ((startYear % 4 === 0 && startYear % 100 !== 0) || startYear % 400 === 0) ? 366 : 365;
+  const firstYearFraction = (daysInStartYear - startDayOfYear) / daysInStartYear;
 
-  const totalReturn = priceRatio * dividendMultiplier;
-  const finalValue = amount * totalReturn;
-  const annualizedReturn = (Math.pow(totalReturn, 1 / Math.max(years, 0.1)) - 1);
+  if (SP500_ANNUAL_RETURNS[startYear] !== undefined) {
+    // Apply the proportional share of that year's total return
+    value *= (1 + SP500_ANNUAL_RETURNS[startYear] * firstYearFraction);
+  }
+
+  // Full calendar years from startYear+1 through currentYear-1
+  for (let y = startYear + 1; y < currentYear; y++) {
+    const ret = SP500_ANNUAL_RETURNS[y];
+    if (ret !== undefined) {
+      value *= (1 + ret);
+    }
+    dataPoints.push({ year: y, value: Math.round(value) });
+  }
+
+  // Partial current year: proportion of year elapsed so far
+  if (currentYear > startYear) {
+    const currentDayOfYear = Math.floor(
+      (now - new Date(currentYear, 0, 1)) / (24 * 60 * 60 * 1000)
+    );
+    const daysInCurrentYear = ((currentYear % 4 === 0 && currentYear % 100 !== 0) || currentYear % 400 === 0) ? 366 : 365;
+    const currentYearFraction = currentDayOfYear / daysInCurrentYear;
+    const currentRet = SP500_ANNUAL_RETURNS[currentYear] || 0;
+    value *= (1 + currentRet * currentYearFraction);
+    dataPoints.push({ year: currentYear, value: Math.round(value) });
+  }
+
+  const totalReturn = (value / amount) - 1;
+  const annualizedReturn = years > 0.1
+    ? Math.pow(value / amount, 1 / years) - 1
+    : totalReturn;
 
   return {
-    startDate: SP500_MONTHLY[startIdx].date,
-    startValue,
-    endValue,
+    startDate,
     years: Math.round(years * 10) / 10,
     invested: amount,
-    finalValue: Math.round(finalValue * 100) / 100,
-    totalReturn: (totalReturn - 1),
+    finalValue: Math.round(value * 100) / 100,
+    totalReturn,
     annualizedReturn,
-    priceRatio,
+    dataPoints,
   };
-}
-
-// Project future value with compound growth
-export function projectFuture(amount, years, annualReturn) {
-  const points = [];
-  for (let y = 0; y <= years; y++) {
-    points.push({
-      year: y,
-      value: Math.round(amount * Math.pow(1 + annualReturn, y) * 100) / 100,
-    });
-  }
-  return points;
 }
 
 // Buffett quotes for display throughout the app

@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { C, font, fmt } from '../theme';
-import { calculateGrowth, projectFuture, HISTORICAL_AVG_RETURN, INFLATION_AVG, BUFFETT_QUOTES } from '../data/sp500';
+import { calculateGrowth, HISTORICAL_AVG_RETURN, BUFFETT_QUOTES } from '../data/sp500';
 
 const TABS = [
   { id: 'birthday', label: 'Birthday Investor' },
@@ -58,13 +58,24 @@ function BirthdayInvestor() {
     setResult(r);
   };
 
+  // Sample every Nth year for chart readability on long spans
+  const chartData = useMemo(() => {
+    if (!result?.dataPoints) return [];
+    const pts = result.dataPoints;
+    if (pts.length <= 30) return pts;
+    // For 30+ year spans, sample roughly every 2-3 years + always include first & last
+    const step = Math.ceil(pts.length / 25);
+    const sampled = pts.filter((_, i) => i === 0 || i === pts.length - 1 || i % step === 0);
+    return sampled;
+  }, [result]);
+
   return (
     <div className="slide-up">
       <div style={s.card}>
         <h2 style={s.cardTitle}>What if you invested on your birthday?</h2>
         <p style={s.cardDesc}>
-          Enter your birthday and an amount. We'll show you what it would be worth today
-          if invested in the S&P 500.
+          Enter any date from 1950 to today and an amount. We'll compound it through
+          every year of actual S&P 500 total returns (with dividends reinvested).
         </p>
 
         <div style={s.inputGroup}>
@@ -75,7 +86,7 @@ function BirthdayInvestor() {
             onChange={(e) => setBirthday(e.target.value)}
             style={s.input}
             max={new Date().toISOString().split('T')[0]}
-            min="2000-01-01"
+            min="1950-01-01"
           />
         </div>
 
@@ -116,9 +127,57 @@ function BirthdayInvestor() {
             <StatBox label="Annual Return" value={fmt.pct(result.annualizedReturn * 100)} />
           </div>
 
+          {/* Growth chart */}
+          {chartData.length > 2 && (
+            <div style={{ marginTop: 16 }}>
+              <ResponsiveContainer width="100%" height={200}>
+                <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="gradBday" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor={C.green} stopOpacity={0.2} />
+                      <stop offset="95%" stopColor={C.green} stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <XAxis
+                    dataKey="year"
+                    tick={{ fontSize: 11, fill: C.muted }}
+                    axisLine={{ stroke: C.border }}
+                    tickLine={false}
+                  />
+                  <YAxis
+                    tick={{ fontSize: 11, fill: C.muted }}
+                    axisLine={false}
+                    tickLine={false}
+                    tickFormatter={(v) => v >= 1000000 ? `$${(v / 1000000).toFixed(1)}M` : v >= 1000 ? `$${(v / 1000).toFixed(0)}K` : `$${v}`}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      background: C.surface,
+                      border: `1px solid ${C.border}`,
+                      borderRadius: 8,
+                      fontSize: 12,
+                    }}
+                    formatter={(v) => fmt.currency(v, 0)}
+                    labelFormatter={(v) => v}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="value"
+                    stroke={C.green}
+                    strokeWidth={2}
+                    fill="url(#gradBday)"
+                    name="Portfolio Value"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          )}
+
           <div style={s.insightBox}>
             <p style={s.insightText}>
-              {result.finalValue > result.invested * 2
+              {result.years >= 40
+                ? `${result.years} years of patience turned ${fmt.currency(result.invested)} into ${fmt.currency(result.finalValue, 0)}. This is the power of compound growth through actual bull markets, bear markets, crashes, and recoveries — all of them.`
+                : result.finalValue > result.invested * 2
                 ? `Your money more than doubled! This is compound growth in action — the S&P 500 averaged about 10% per year, but your gains earned their own gains.`
                 : result.years < 3
                 ? `Over shorter periods, the market can be unpredictable. But Buffett's advice holds: think in decades, not days.`
@@ -132,8 +191,9 @@ function BirthdayInvestor() {
       {!result && (
         <div style={s.hintCard}>
           <p style={s.hintText}>
-            Hint: Try dates around 2008-2009 to see how even investing right before
-            the financial crisis turned out fine if you held long enough.
+            Try your parents' or grandparents' birthdays to see decades of compounding.
+            Or try dates around 2008-2009 to see how even investing right before a crash
+            turned out fine with patience.
           </p>
         </div>
       )}
@@ -158,17 +218,22 @@ function FutureBuilder() {
       { label: 'Aggressive (10%)', rate: HISTORICAL_AVG_RETURN, color: C.green },
     ];
 
-    // Build yearly data for chart
+    // Build yearly data for chart using proper monthly compounding
     const chartData = [];
     for (let y = 0; y <= yr; y++) {
       const point = { year: y };
+      const months = y * 12;
       rates.forEach(r => {
-        // Compound principal + monthly contributions
-        const compoundedPrincipal = principal * Math.pow(1 + r.rate, y);
-        const annuityFactor = monthlyAdd * 12 * ((Math.pow(1 + r.rate, y) - 1) / r.rate);
-        point[r.label] = Math.round(compoundedPrincipal + (y > 0 ? annuityFactor : 0));
+        const monthlyRate = r.rate / 12;
+        // Principal compounded monthly
+        const compoundedPrincipal = principal * Math.pow(1 + monthlyRate, months);
+        // Future value of monthly contributions (annuity)
+        const annuityFV = monthlyRate > 0
+          ? monthlyAdd * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate)
+          : monthlyAdd * months;
+        point[r.label] = Math.round(compoundedPrincipal + annuityFV);
       });
-      // Also track total contributed
+      // Total contributed (no growth)
       point.contributed = principal + (monthlyAdd * 12 * y);
       chartData.push(point);
     }
@@ -329,17 +394,15 @@ function BuffettBet() {
   const data = useMemo(() => {
     const invested = parseFloat(amount) || 10000;
     // Buffett's actual bet: S&P 500 index vs hedge funds (2007-2017)
-    // S&P 500: 125.8% total return, Hedge funds: 36% total return
-    // We'll model similar over 10 years
-    const indexReturn = 0.085; // ~8.5% annual (what index actually did)
-    const hedgeReturn = 0.031; // ~3.1% annual (what hedge funds did)
-    const hedgeFees = 0.02;   // 2% management fee
-    const hedgePerf = 0.20;   // 20% performance fee
+    // S&P 500: ~125.8% total return (~8.5% annualized)
+    // Hedge funds (Protégé Partners avg): ~36% total return (~3.1% annualized, net of fees)
+    // The hedge fund 2-and-20 fee structure ate the returns
+    const indexReturn = 0.085;  // annualized net return for S&P 500 index fund
+    const hedgeReturn = 0.031;  // annualized net return for hedge fund basket (after fees)
 
     const points = [];
     let indexVal = invested;
     let hedgeVal = invested;
-    let hedgeFeesPaid = 0;
 
     for (let y = 0; y <= 10; y++) {
       points.push({
@@ -348,17 +411,12 @@ function BuffettBet() {
         'Hedge Funds (avg)': Math.round(hedgeVal),
       });
       if (y < 10) {
-        // Index: low-cost, just grows
         indexVal *= (1 + indexReturn);
-
-        // Hedge fund: grows less, fees eat returns
-        const grossReturn = hedgeVal * (hedgeReturn + hedgeFees + (hedgeReturn > 0 ? hedgeReturn * hedgePerf : 0));
-        hedgeFeesPaid += hedgeVal * hedgeFees + Math.max(0, hedgeVal * hedgeReturn * hedgePerf);
         hedgeVal *= (1 + hedgeReturn);
       }
     }
 
-    return { points, invested, indexFinal: Math.round(indexVal), hedgeFinal: Math.round(hedgeVal), hedgeFeesPaid: Math.round(hedgeFeesPaid) };
+    return { points, invested, indexFinal: Math.round(indexVal), hedgeFinal: Math.round(hedgeVal) };
   }, [amount]);
 
   return (
