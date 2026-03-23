@@ -4,6 +4,7 @@ import { C, font } from '../theme';
 const tabs = [
   { path: '/', label: 'Home', icon: 'H' },
   { path: '/learn', label: 'Learn', icon: 'L' },
+  { path: '/game', label: 'Play', icon: 'P' },
   { path: '/simulator', label: 'Simulator', icon: 'S' },
   { path: '/glossary', label: 'Glossary', icon: 'G' },
 ];
@@ -28,6 +29,12 @@ function TabIcon({ tab, active }) {
           <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
           <line x1="8" y1="7" x2="16" y2="7" />
           <line x1="8" y1="11" x2="14" y2="11" />
+        </svg>
+      );
+    case 'P':
+      return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
         </svg>
       );
     case 'S':
