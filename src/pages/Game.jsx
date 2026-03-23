@@ -99,9 +99,35 @@ export default function Game() {
       <div style={s.page}>
         <div style={s.startScreen} className="fade-in">
           <div style={s.gameIcon}>
-            <span style={s.bull}>Bull</span>
+            {/* Bull icon */}
+            <div style={s.iconCol}>
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke={C.green} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M8 14c0 0-2-8 4-10c2 0 3 3 3 3" />
+                <path d="M40 14c0 0 2-8-4-10c-2 0-3 3-3 3" />
+                <ellipse cx="24" cy="26" rx="14" ry="12" />
+                <circle cx="18" cy="22" r="1.5" fill={C.green} />
+                <circle cx="30" cy="22" r="1.5" fill={C.green} />
+                <path d="M20 30c0 0 2 3 4 3s4-3 4-3" />
+                <ellipse cx="18" cy="28" rx="3" ry="2" strokeWidth="1.5" />
+                <ellipse cx="30" cy="28" rx="3" ry="2" strokeWidth="1.5" />
+              </svg>
+              <span style={s.bull}>Bull</span>
+            </div>
             <span style={s.or}>or</span>
-            <span style={s.bear}>Bear</span>
+            {/* Bear icon */}
+            <div style={s.iconCol}>
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke={C.red} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="14" cy="10" r="5" />
+                <circle cx="34" cy="10" r="5" />
+                <ellipse cx="24" cy="26" rx="15" ry="14" />
+                <circle cx="18" cy="22" r="1.5" fill={C.red} />
+                <circle cx="30" cy="22" r="1.5" fill={C.red} />
+                <ellipse cx="24" cy="29" rx="4" ry="3" />
+                <line x1="24" y1="32" x2="24" y2="34" />
+                <path d="M20 35c0 0 2 2 4 2s4-2 4-2" />
+              </svg>
+              <span style={s.bear}>Bear</span>
+            </div>
           </div>
           <p style={s.startDesc}>
             A headline flashes. You decide: does the market go up or down?
@@ -308,26 +334,33 @@ const s = {
   },
   gameIcon: {
     display: 'flex',
-    alignItems: 'baseline',
+    alignItems: 'center',
     justifyContent: 'center',
-    gap: 10,
-    marginBottom: 16,
+    gap: 20,
+    marginBottom: 20,
+  },
+  iconCol: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: 6,
   },
   bull: {
     fontFamily: font.heading,
-    fontSize: 36,
+    fontSize: 28,
     fontWeight: 700,
     color: C.green,
   },
   or: {
     fontFamily: font.heading,
-    fontSize: 20,
+    fontSize: 18,
     fontStyle: 'italic',
     color: C.muted,
+    paddingTop: 20,
   },
   bear: {
     fontFamily: font.heading,
-    fontSize: 36,
+    fontSize: 28,
     fontWeight: 700,
     color: C.red,
   },
