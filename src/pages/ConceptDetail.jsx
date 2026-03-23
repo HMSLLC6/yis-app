@@ -1,11 +1,23 @@
+import { useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { C, font } from '../theme';
-import { CONCEPT_MAP, MODULES } from '../data/concepts';
+import { CONCEPTS, CONCEPT_MAP, MODULES } from '../data/concepts';
 
 export default function ConceptDetail() {
   const { conceptId } = useParams();
   const navigate = useNavigate();
   const concept = CONCEPT_MAP[conceptId];
+
+  // Get all concepts in this module, in order
+  const moduleConcepts = useMemo(() => {
+    if (!concept) return [];
+    return CONCEPTS.filter(c => c.module === concept.module);
+  }, [concept]);
+
+  const currentIndex = moduleConcepts.findIndex(c => c.id === conceptId);
+  const total = moduleConcepts.length;
+  const prev = currentIndex > 0 ? moduleConcepts[currentIndex - 1] : null;
+  const next = currentIndex < total - 1 ? moduleConcepts[currentIndex + 1] : null;
 
   if (!concept) {
     return (
@@ -22,14 +34,34 @@ export default function ConceptDetail() {
     .map(id => CONCEPT_MAP[id])
     .filter(Boolean);
 
+  const goTo = (id) => {
+    navigate(`/concept/${id}`);
+    window.scrollTo(0, 0);
+  };
+
   return (
     <div style={s.page}>
-      <button style={s.back} onClick={() => navigate(`/learn/${concept.module}`)}>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={C.textDim} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="15 18 9 12 15 6" />
-        </svg>
-        {module?.title || 'Back'}
-      </button>
+      {/* Top bar: back + progress */}
+      <div style={s.topBar}>
+        <button style={s.back} onClick={() => navigate(`/learn/${concept.module}`)}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={C.textDim} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+          {module?.title || 'Back'}
+        </button>
+        <span style={{ ...s.pageNum, color: module?.color || C.muted }}>
+          {currentIndex + 1} / {total}
+        </span>
+      </div>
+
+      {/* Progress bar */}
+      <div style={s.progressTrack}>
+        <div style={{
+          ...s.progressFill,
+          width: `${((currentIndex + 1) / total) * 100}%`,
+          background: module?.color || C.gold,
+        }} />
+      </div>
 
       <div className="fade-in">
         {/* Module badge */}
@@ -39,7 +71,7 @@ export default function ConceptDetail() {
             color: module.color,
             background: module.color + '15',
           }}>
-            Module {module.number}: {module.title}
+            Module {module.number}
           </div>
         )}
 
@@ -89,7 +121,7 @@ export default function ConceptDetail() {
                   <button
                     key={rc.id}
                     style={s.relatedCard}
-                    onClick={() => navigate(`/concept/${rc.id}`)}
+                    onClick={() => goTo(rc.id)}
                   >
                     <div style={{
                       ...s.relatedDot,
@@ -107,6 +139,46 @@ export default function ConceptDetail() {
             </div>
           </div>
         )}
+
+        {/* Prev / Next navigation */}
+        <div style={s.navRow}>
+          {prev ? (
+            <button style={s.navBtn} onClick={() => goTo(prev.id)}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={C.textDim} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
+              <div style={s.navBtnText}>
+                <span style={s.navBtnLabel}>Previous</span>
+                <span style={s.navBtnTitle}>{prev.term}</span>
+              </div>
+            </button>
+          ) : <div />}
+
+          {next ? (
+            <button style={{ ...s.navBtn, ...s.navBtnRight }} onClick={() => goTo(next.id)}>
+              <div style={{ ...s.navBtnText, textAlign: 'right' }}>
+                <span style={s.navBtnLabel}>Next</span>
+                <span style={s.navBtnTitle}>{next.term}</span>
+              </div>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={C.textDim} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </button>
+          ) : (
+            <button
+              style={{ ...s.navBtn, ...s.navBtnRight, ...s.navBtnDone }}
+              onClick={() => navigate(`/learn/${concept.module}`)}
+            >
+              <div style={{ ...s.navBtnText, textAlign: 'right' }}>
+                <span style={{ ...s.navBtnLabel, color: C.green }}>Complete</span>
+                <span style={s.navBtnTitle}>Back to module</span>
+              </div>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={C.green} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -118,6 +190,12 @@ const s = {
     margin: '0 auto',
     padding: '20px 16px',
   },
+  topBar: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
   back: {
     display: 'flex',
     alignItems: 'center',
@@ -128,7 +206,24 @@ const s = {
     border: 'none',
     cursor: 'pointer',
     padding: '8px 0',
-    marginBottom: 16,
+  },
+  pageNum: {
+    fontSize: 12,
+    fontWeight: 600,
+    fontFamily: font.mono,
+  },
+  progressTrack: {
+    width: '100%',
+    height: 3,
+    background: C.border,
+    borderRadius: 2,
+    marginBottom: 20,
+    overflow: 'hidden',
+  },
+  progressFill: {
+    height: '100%',
+    borderRadius: 2,
+    transition: 'width 0.3s ease',
   },
   moduleBadge: {
     display: 'inline-block',
@@ -248,5 +343,50 @@ const s = {
   relatedModule: {
     fontSize: 10,
     color: C.muted,
+  },
+  // Prev / Next
+  navRow: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    gap: 10,
+    paddingTop: 8,
+    borderTop: `1px solid ${C.border}`,
+    marginBottom: 16,
+  },
+  navBtn: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 8,
+    padding: '12px 14px',
+    background: C.surface,
+    border: `1px solid ${C.border}`,
+    borderRadius: 10,
+    cursor: 'pointer',
+    maxWidth: '48%',
+    transition: 'border-color 0.2s',
+  },
+  navBtnRight: {
+    marginLeft: 'auto',
+  },
+  navBtnDone: {
+    borderColor: C.green + '30',
+  },
+  navBtnText: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 2,
+  },
+  navBtnLabel: {
+    fontSize: 10,
+    fontWeight: 600,
+    color: C.muted,
+    textTransform: 'uppercase',
+    letterSpacing: '0.06em',
+  },
+  navBtnTitle: {
+    fontSize: 12,
+    fontWeight: 500,
+    color: C.text,
+    lineHeight: 1.3,
   },
 };
