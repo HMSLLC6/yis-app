@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { C, font } from '../theme';
 import { shuffleQuestions } from '../data/questions';
 import { CONCEPT_MAP, MODULES } from '../data/concepts';
-import bullSvg from '../assets/bull.svg';
-import bearSvg from '../assets/bear.svg';
+import bullImg from '../assets/bull.png';
+import bearImg from '../assets/bear.png';
 
 const ROUND_SIZE = 10;
 
@@ -102,12 +102,12 @@ export default function Game() {
         <div style={s.startScreen} className="fade-in">
           <div style={s.gameIcon}>
             <div style={s.iconCol}>
-              <img src={bullSvg} alt="Bull" style={{ width: 64, height: 64, filter: 'brightness(0) invert(1)', opacity: 0.85 }} />
+              <img src={bullImg} alt="Bull" style={s.animalImg} />
               <span style={s.bull}>Bull</span>
             </div>
             <span style={s.or}>or</span>
             <div style={s.iconCol}>
-              <img src={bearSvg} alt="Bear" style={{ width: 64, height: 64, filter: 'brightness(0) invert(1)', opacity: 0.85 }} />
+              <img src={bearImg} alt="Bear" style={s.animalImg} />
               <span style={s.bear}>Bear</span>
             </div>
           </div>
@@ -326,6 +326,13 @@ const s = {
     flexDirection: 'column',
     alignItems: 'center',
     gap: 6,
+  },
+  animalImg: {
+    width: 80,
+    height: 80,
+    objectFit: 'contain',
+    filter: 'invert(1)',
+    mixBlendMode: 'screen',
   },
   bull: {
     fontFamily: font.heading,
