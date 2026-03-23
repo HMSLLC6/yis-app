@@ -1,12 +1,19 @@
 import { useMemo } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { C, font } from '../theme';
 import { CONCEPTS, CONCEPT_MAP, MODULES } from '../data/concepts';
 
 export default function ConceptDetail() {
   const { conceptId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const concept = CONCEPT_MAP[conceptId];
+
+  // Track where the user came from (passed via navigate state)
+  const cameFrom = location.state?.from ? CONCEPT_MAP[location.state.from] : null;
+  const cameFromModule = cameFrom ? MODULES.find(m => m.id === cameFrom.module) : null;
+  // Only show the "return" banner if they jumped to a different module
+  const showReturn = cameFrom && concept && cameFrom.module !== concept.module;
 
   // Get all concepts in this module, in order
   const moduleConcepts = useMemo(() => {
@@ -34,8 +41,14 @@ export default function ConceptDetail() {
     .map(id => CONCEPT_MAP[id])
     .filter(Boolean);
 
+  // Pass current concept as "from" so the destination knows where we came from
   const goTo = (id) => {
-    navigate(`/concept/${id}`);
+    navigate(`/concept/${id}`, { state: { from: conceptId } });
+    window.scrollTo(0, 0);
+  };
+
+  const goBack = () => {
+    navigate(`/concept/${cameFrom.id}`, { state: location.state?.parentFrom ? { from: location.state.parentFrom } : undefined });
     window.scrollTo(0, 0);
   };
 
@@ -62,6 +75,23 @@ export default function ConceptDetail() {
           background: module?.color || C.gold,
         }} />
       </div>
+
+      {/* Return banner — shown when you jumped here from another module */}
+      {showReturn && (
+        <button style={{
+          ...s.returnBanner,
+          borderColor: cameFromModule?.color + '40',
+          background: cameFromModule?.color + '10',
+        }} onClick={goBack}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={cameFromModule?.color || C.textDim} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="19 12 5 12" />
+            <polyline points="12 19 5 12 12 5" />
+          </svg>
+          <span style={{ color: cameFromModule?.color || C.textDim }}>
+            Return to {cameFrom.term}
+          </span>
+        </button>
+      )}
 
       <div className="fade-in">
         {/* Module badge */}
@@ -224,6 +254,21 @@ const s = {
     height: '100%',
     borderRadius: 2,
     transition: 'width 0.3s ease',
+  },
+  returnBanner: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 8,
+    width: '100%',
+    padding: '10px 14px',
+    border: '1px solid',
+    borderRadius: 10,
+    marginBottom: 16,
+    fontSize: 13,
+    fontWeight: 500,
+    cursor: 'pointer',
+    background: 'transparent',
+    textAlign: 'left',
   },
   moduleBadge: {
     display: 'inline-block',
