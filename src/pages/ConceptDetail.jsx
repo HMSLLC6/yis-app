@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { C, font } from '../theme';
 import { CONCEPTS, CONCEPT_MAP, MODULES } from '../data/concepts';
+import ConceptVisual from '../components/ConceptVisuals';
 
 export default function ConceptDetail() {
   const { conceptId } = useParams();
@@ -106,6 +107,9 @@ export default function ConceptDetail() {
           <h2 style={s.sectionLabel}>What it means</h2>
           <p style={s.body}>{concept.definition}</p>
         </div>
+
+        {/* Visual — renders chart/graphic if one exists for this concept */}
+        <ConceptVisual conceptId={concept.id} />
 
         {/* Real-world example */}
         <div style={s.exampleCard}>
