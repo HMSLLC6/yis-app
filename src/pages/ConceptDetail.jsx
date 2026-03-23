@@ -76,23 +76,6 @@ export default function ConceptDetail() {
         }} />
       </div>
 
-      {/* Return banner — shown when you jumped here from another module */}
-      {showReturn && (
-        <button style={{
-          ...s.returnBanner,
-          borderColor: cameFromModule?.color + '40',
-          background: cameFromModule?.color + '10',
-        }} onClick={goBack}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={cameFromModule?.color || C.textDim} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="19 12 5 12" />
-            <polyline points="12 19 5 12 12 5" />
-          </svg>
-          <span style={{ color: cameFromModule?.color || C.textDim }}>
-            Return to {cameFrom.term}
-          </span>
-        </button>
-      )}
-
       <div className="fade-in">
         {/* Module badge */}
         {module && (
@@ -209,6 +192,26 @@ export default function ConceptDetail() {
             </button>
           )}
         </div>
+
+        {/* Return to origin — shown when you jumped here from another module */}
+        {showReturn && (
+          <button style={{
+            ...s.returnBanner,
+            borderColor: cameFromModule?.color + '40',
+            background: cameFromModule?.color + '10',
+          }} onClick={goBack}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={cameFromModule?.color || C.textDim} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="19 12 5 12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
+            <span style={{ color: cameFromModule?.color || C.textDim }}>
+              Return to {cameFrom.term}
+            </span>
+            <span style={s.returnModuleTag}>
+              Module {cameFromModule?.number}
+            </span>
+          </button>
+        )}
       </div>
     </div>
   );
@@ -260,15 +263,23 @@ const s = {
     alignItems: 'center',
     gap: 8,
     width: '100%',
-    padding: '10px 14px',
+    padding: '12px 14px',
     border: '1px solid',
     borderRadius: 10,
+    marginTop: 12,
     marginBottom: 16,
     fontSize: 13,
     fontWeight: 500,
     cursor: 'pointer',
     background: 'transparent',
     textAlign: 'left',
+  },
+  returnModuleTag: {
+    marginLeft: 'auto',
+    fontSize: 10,
+    fontWeight: 600,
+    color: C.muted,
+    whiteSpace: 'nowrap',
   },
   moduleBadge: {
     display: 'inline-block',
