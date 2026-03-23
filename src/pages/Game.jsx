@@ -99,32 +99,24 @@ export default function Game() {
       <div style={s.page}>
         <div style={s.startScreen} className="fade-in">
           <div style={s.gameIcon}>
-            {/* Bull icon */}
+            {/* Bull — minimal head outline: horns + tapered face */}
             <div style={s.iconCol}>
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke={C.green} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M8 14c0 0-2-8 4-10c2 0 3 3 3 3" />
-                <path d="M40 14c0 0 2-8-4-10c-2 0-3 3-3 3" />
-                <ellipse cx="24" cy="26" rx="14" ry="12" />
-                <circle cx="18" cy="22" r="1.5" fill={C.green} />
-                <circle cx="30" cy="22" r="1.5" fill={C.green} />
-                <path d="M20 30c0 0 2 3 4 3s4-3 4-3" />
-                <ellipse cx="18" cy="28" rx="3" ry="2" strokeWidth="1.5" />
-                <ellipse cx="30" cy="28" rx="3" ry="2" strokeWidth="1.5" />
+              <svg width="52" height="52" viewBox="0 0 52 52" fill="none" stroke={C.green} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M10 12 L6 4" />
+                <path d="M42 12 L46 4" />
+                <path d="M10 12 C10 12 8 20 10 28 C12 36 18 42 26 42 C34 42 40 36 42 28 C44 20 42 12 42 12" />
+                <path d="M10 12 C14 10 20 9 26 9 C32 9 38 10 42 12" />
               </svg>
               <span style={s.bull}>Bull</span>
             </div>
             <span style={s.or}>or</span>
-            {/* Bear icon */}
+            {/* Bear — minimal head outline: round ears + broad face */}
             <div style={s.iconCol}>
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke={C.red} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="14" cy="10" r="5" />
-                <circle cx="34" cy="10" r="5" />
-                <ellipse cx="24" cy="26" rx="15" ry="14" />
-                <circle cx="18" cy="22" r="1.5" fill={C.red} />
-                <circle cx="30" cy="22" r="1.5" fill={C.red} />
-                <ellipse cx="24" cy="29" rx="4" ry="3" />
-                <line x1="24" y1="32" x2="24" y2="34" />
-                <path d="M20 35c0 0 2 2 4 2s4-2 4-2" />
+              <svg width="52" height="52" viewBox="0 0 52 52" fill="none" stroke={C.red} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="6" />
+                <circle cx="41" cy="11" r="6" />
+                <path d="M8 18 C8 18 6 28 10 36 C14 44 20 46 26 46 C32 46 38 44 42 36 C46 28 44 18 44 18" />
+                <path d="M8 18 C12 14 18 12 26 12 C34 12 40 14 44 18" />
               </svg>
               <span style={s.bear}>Bear</span>
             </div>

@@ -34,9 +34,7 @@ function TabIcon({ tab, active }) {
     case 'P':
       return (
         <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="4 15 8 11 4 7" />
-          <polyline points="20 9 16 13 20 17" />
-          <line x1="8" y1="11" x2="16" y2="13" />
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
         </svg>
       );
     case 'S':
