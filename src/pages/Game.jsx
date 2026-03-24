@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { C, font } from '../theme';
 import { shuffleQuestions } from '../data/questions';
@@ -165,6 +165,20 @@ export default function Game() {
           <button style={s.startBtn} onClick={startGame}>
             Play Again
           </button>
+          <button style={s.shareBtn} onClick={() => {
+            const text = `I scored ${score} pts with a ${bestStreak}-streak on Bull or Bear! Can you beat me? ${window.location.origin}/game`;
+            if (navigator.share) {
+              navigator.share({ text }).catch(() => {});
+            } else {
+              navigator.clipboard.writeText(text).then(() => {
+                const el = document.getElementById('copied-toast');
+                if (el) { el.style.opacity = 1; setTimeout(() => { el.style.opacity = 0; }, 1500); }
+              }).catch(() => {});
+            }
+          }}>
+            Share Score
+          </button>
+          <div id="copied-toast" style={s.copiedToast}>Copied to clipboard!</div>
           <button style={s.learnBtn} onClick={() => navigate('/learn')}>
             Review Concepts
           </button>
@@ -383,6 +397,26 @@ const s = {
     cursor: 'pointer',
     border: 'none',
     marginBottom: 10,
+  },
+  shareBtn: {
+    width: '100%',
+    padding: '12px',
+    background: 'transparent',
+    color: C.gold,
+    fontWeight: 600,
+    fontSize: 14,
+    borderRadius: 10,
+    cursor: 'pointer',
+    border: `1px solid ${C.gold}40`,
+    marginBottom: 8,
+  },
+  copiedToast: {
+    fontSize: 12,
+    color: C.green,
+    textAlign: 'center',
+    opacity: 0,
+    transition: 'opacity 0.3s',
+    marginBottom: 8,
   },
   learnBtn: {
     width: '100%',

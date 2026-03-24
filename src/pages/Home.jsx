@@ -1,15 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { C, font } from '../theme';
 import { BUFFETT_QUOTES } from '../data/sp500';
-import { MODULES } from '../data/concepts';
+import { CONCEPTS, MODULES } from '../data/concepts';
+import useProgress from '../hooks/useProgress';
 
 export default function Home() {
   const navigate = useNavigate();
   const [quote, setQuote] = useState(null);
+  const { totalProgress, getModuleProgress } = useProgress();
+
+  // Concept of the Day — deterministic based on date
+  const conceptOfDay = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const dayOfYear = Math.floor((now - start) / (1000 * 60 * 60 * 24));
+    return CONCEPTS[dayOfYear % CONCEPTS.length];
+  }, []);
+  const codModule = MODULES.find(m => m.id === conceptOfDay?.module);
 
   useEffect(() => {
-    // Pick a random quote on mount
     const idx = Math.floor(Math.random() * BUFFETT_QUOTES.length);
     setQuote(BUFFETT_QUOTES[idx]);
   }, []);
@@ -25,12 +35,32 @@ export default function Home() {
         </p>
       </div>
 
-      {/* Buffett Quote */}
+      {/* Concept of the Day */}
+      {conceptOfDay && (
+        <button
+          style={{ ...s.codCard, borderLeftColor: codModule?.color || C.gold }}
+          className="slide-up"
+          onClick={() => navigate(`/concept/${conceptOfDay.id}`)}
+        >
+          <div style={s.codHeader}>
+            <span style={s.codLabel}>Concept of the Day</span>
+            <div style={{ ...s.codDot, background: codModule?.color }} />
+          </div>
+          <h3 style={s.codTerm}>{conceptOfDay.term}</h3>
+          <p style={s.codDef}>
+            {conceptOfDay.definition.length > 120
+              ? conceptOfDay.definition.slice(0, 120) + '...'
+              : conceptOfDay.definition}
+          </p>
+          <span style={{ ...s.codLink, color: codModule?.color }}>Tap to learn</span>
+        </button>
+      )}
+
+      {/* Buffett Quote — compact */}
       {quote && (
-        <div style={s.quoteCard} className="slide-up">
-          <div style={s.quoteMarks}>"</div>
-          <p style={s.quoteText}>{quote.quote}</p>
-          <p style={s.quoteSource}>— {quote.source}</p>
+        <div style={s.quoteRow} className="slide-up">
+          <p style={s.quoteCompact}>"{quote.quote}"</p>
+          <span style={s.quoteSource}>— {quote.source}</span>
         </div>
       )}
 
@@ -57,6 +87,23 @@ export default function Home() {
         </button>
       </div>
 
+      {/* Overall progress */}
+      <div style={s.progressSection} className="fade-in">
+        <div style={s.progressHeader}>
+          <span style={s.progressLabel}>Your Progress</span>
+          <span style={s.progressCount}>{totalProgress.read} of {totalProgress.total} concepts</span>
+        </div>
+        <div style={s.progressTrack}>
+          <div style={{
+            height: '100%',
+            borderRadius: 3,
+            width: `${totalProgress.percent}%`,
+            background: C.gold,
+            transition: 'width 0.3s ease',
+          }} />
+        </div>
+      </div>
+
       {/* Module Preview */}
       <div style={s.sectionHeader}>
         <h2 style={s.sectionTitle}>Your Learning Path</h2>
@@ -64,32 +111,44 @@ export default function Home() {
       </div>
 
       <div style={s.moduleList}>
-        {MODULES.map((mod, i) => (
-          <button
-            key={mod.id}
-            style={{
-              ...s.moduleCard,
-              animationDelay: `${i * 0.08}s`,
-            }}
-            className="slide-up"
-            onClick={() => navigate(`/learn/${mod.id}`)}
-          >
-            <div style={{
-              ...s.moduleNum,
-              background: mod.color + '20',
-              color: mod.color,
-            }}>
-              {mod.number}
-            </div>
-            <div style={s.moduleInfo}>
-              <h3 style={s.moduleTitle}>{mod.title}</h3>
-              <p style={s.moduleSub}>{mod.subtitle}</p>
-            </div>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={C.muted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-          </button>
-        ))}
+        {MODULES.map((mod, i) => {
+          const mp = getModuleProgress(mod.id);
+          return (
+            <button
+              key={mod.id}
+              style={{
+                ...s.moduleCard,
+                animationDelay: `${i * 0.08}s`,
+              }}
+              className="slide-up"
+              onClick={() => navigate(`/learn/${mod.id}`)}
+            >
+              <div style={{
+                ...s.moduleNum,
+                background: mod.color + '20',
+                color: mod.color,
+              }}>
+                {mod.number}
+              </div>
+              <div style={s.moduleInfo}>
+                <h3 style={s.moduleTitle}>{mod.title}</h3>
+                <p style={s.moduleSub}>{mod.subtitle}</p>
+                <span style={{ fontSize: 11, color: mp.read > 0 ? mod.color : C.muted, fontWeight: 500, marginTop: 2, display: 'inline-block' }}>
+                  {mp.read} / {mp.total}
+                </span>
+              </div>
+              {mp.percent === 100 ? (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={C.green} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              ) : (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={C.muted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              )}
+            </button>
+          );
+        })}
       </div>
 
       {/* Buffett Philosophy */}
@@ -150,32 +209,70 @@ const s = {
     maxWidth: 340,
     margin: '0 auto',
   },
-  quoteCard: {
-    background: C.surface,
-    border: `1px solid ${C.border}`,
-    borderRadius: 16,
-    padding: '24px 20px',
-    marginBottom: 24,
-    position: 'relative',
+  // Concept of the Day
+  codCard: {
+    display: 'block',
+    width: '100%',
+    textAlign: 'left',
+    background: 'transparent',
+    border: 'none',
+    borderLeft: '3px solid',
+    borderRadius: 0,
+    padding: '12px 16px',
+    marginBottom: 12,
+    cursor: 'pointer',
   },
-  quoteMarks: {
-    fontFamily: font.heading,
-    fontSize: 48,
-    color: C.gold + '40',
-    lineHeight: 1,
-    marginBottom: -8,
+  codHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 6,
   },
-  quoteText: {
+  codLabel: {
+    fontSize: 10,
+    fontWeight: 600,
+    textTransform: 'uppercase',
+    letterSpacing: '0.08em',
+    color: C.muted,
+  },
+  codDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+  },
+  codTerm: {
     fontFamily: font.heading,
-    fontSize: 16,
-    fontStyle: 'italic',
+    fontSize: 18,
+    fontWeight: 600,
     color: C.text,
-    lineHeight: 1.6,
+    marginBottom: 4,
+  },
+  codDef: {
+    fontSize: 13,
+    color: C.textDim,
+    lineHeight: 1.5,
+    marginBottom: 6,
+  },
+  codLink: {
+    fontSize: 12,
+    fontWeight: 600,
+  },
+  // Buffett quote — compact
+  quoteRow: {
+    padding: '0 0 20px',
     marginBottom: 8,
   },
-  quoteSource: {
+  quoteCompact: {
+    fontFamily: font.heading,
     fontSize: 13,
-    color: C.gold,
+    fontStyle: 'italic',
+    color: C.textDim,
+    lineHeight: 1.5,
+    marginBottom: 4,
+  },
+  quoteSource: {
+    fontSize: 11,
+    color: C.muted,
     fontWeight: 500,
   },
   actions: {
@@ -215,6 +312,36 @@ const s = {
     cursor: 'pointer',
     border: `1px solid ${C.gold}40`,
     transition: 'transform 0.15s, opacity 0.15s',
+  },
+  progressSection: {
+    marginBottom: 28,
+    padding: '16px 18px',
+    background: C.surface,
+    border: `1px solid ${C.border}`,
+    borderRadius: 12,
+  },
+  progressHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  progressLabel: {
+    fontSize: 14,
+    fontWeight: 600,
+    color: C.text,
+  },
+  progressCount: {
+    fontSize: 12,
+    fontWeight: 500,
+    color: C.textDim,
+  },
+  progressTrack: {
+    width: '100%',
+    height: 4,
+    background: C.border,
+    borderRadius: 3,
+    overflow: 'hidden',
   },
   sectionHeader: {
     marginBottom: 16,

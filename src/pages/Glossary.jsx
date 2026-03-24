@@ -43,9 +43,9 @@ export default function Glossary() {
   return (
     <div style={s.page}>
       <div className="fade-in">
-        <h1 style={s.title}>Glossary</h1>
+        <h1 style={s.title}>Search</h1>
         <p style={s.subtitle}>
-          {CONCEPTS.length} investment terms, all in plain English
+          {CONCEPTS.length} investment concepts — find any term instantly
         </p>
       </div>
 

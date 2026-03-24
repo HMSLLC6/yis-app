@@ -6,7 +6,7 @@ const tabs = [
   { path: '/news', label: 'News', icon: 'N' },
   { path: '/simulator', label: 'Simulator', icon: 'S' },
   { path: '/game', label: 'Play', icon: 'P' },
-  { path: '/glossary', label: 'Glossary', icon: 'G' },
+  { path: '/glossary', label: 'Search', icon: 'G' },
 ];
 
 // Simple SVG icons

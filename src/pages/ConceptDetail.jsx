@@ -1,14 +1,26 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { C, font } from '../theme';
 import { CONCEPTS, CONCEPT_MAP, MODULES } from '../data/concepts';
 import ConceptVisual from '../components/ConceptVisuals';
+import useProgress from '../hooks/useProgress';
 
 export default function ConceptDetail() {
   const { conceptId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const concept = CONCEPT_MAP[conceptId];
+  const { readConcepts, markRead } = useProgress();
+  const isRead = readConcepts.includes(conceptId);
+
+  // Auto-mark as read after 3 seconds on the page
+  useEffect(() => {
+    if (!concept) return;
+    const timer = setTimeout(() => {
+      markRead(concept.id);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [concept, markRead]);
 
   // Track where the user came from (passed via navigate state)
   const cameFrom = location.state?.from ? CONCEPT_MAP[location.state.from] : null;
@@ -90,12 +102,19 @@ export default function ConceptDetail() {
       <div className="fade-in">
         {/* Module badge */}
         {module && (
-          <div style={{
-            ...s.moduleBadge,
-            color: module.color,
-            background: module.color + '15',
-          }}>
-            Module {module.number}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div style={{
+              ...s.moduleBadge,
+              color: module.color,
+              background: module.color + '15',
+            }}>
+              Module {module.number}
+            </div>
+            {isRead && (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={C.green} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            )}
           </div>
         )}
 

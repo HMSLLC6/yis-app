@@ -1,10 +1,12 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { C, font } from '../theme';
 import { MODULES, CONCEPTS } from '../data/concepts';
+import useProgress from '../hooks/useProgress';
 
 export default function Learn() {
   const { moduleId } = useParams();
   const navigate = useNavigate();
+  const { readConcepts, getModuleProgress } = useProgress();
 
   // If a module is selected, show its concepts
   const activeModule = MODULES.find(m => m.id === moduleId);
@@ -30,11 +32,32 @@ export default function Learn() {
           }}>
             {activeModule.number}
           </div>
-          <div>
+          <div style={{ flex: 1 }}>
             <h1 style={s.moduleTitle}>{activeModule.title}</h1>
             <p style={s.moduleSub}>{activeModule.subtitle}</p>
           </div>
         </div>
+
+        {/* Module progress */}
+        {(() => {
+          const mp = getModuleProgress(activeModule.id);
+          return (
+            <div style={s.moduleProgressWrap}>
+              <div style={s.moduleProgressBar}>
+                <div style={{
+                  height: '100%',
+                  borderRadius: 2,
+                  width: `${mp.percent}%`,
+                  background: activeModule.color,
+                  transition: 'width 0.3s ease',
+                }} />
+              </div>
+              <span style={s.moduleProgressText}>
+                {mp.read} of {mp.total} read
+              </span>
+            </div>
+          );
+        })()}
 
         <div style={s.conceptList}>
           {moduleConcepts.map((concept, i) => (
@@ -48,7 +71,14 @@ export default function Learn() {
               className="slide-up"
               onClick={() => navigate(`/concept/${concept.id}`)}
             >
-              <h3 style={s.conceptTerm}>{concept.term}</h3>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                <h3 style={{ ...s.conceptTerm, marginBottom: 0 }}>{concept.term}</h3>
+                {readConcepts.includes(concept.id) && (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={C.green} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                )}
+              </div>
               <p style={s.conceptDef}>
                 {concept.definition.length > 120
                   ? concept.definition.slice(0, 120) + '...'
@@ -79,7 +109,7 @@ export default function Learn() {
 
       <div style={s.moduleGrid}>
         {MODULES.map((mod, i) => {
-          const count = CONCEPTS.filter(c => c.module === mod.id).length;
+          const mp = getModuleProgress(mod.id);
           return (
             <button
               key={mod.id}
@@ -100,9 +130,18 @@ export default function Learn() {
               </div>
               <h2 style={s.modCardTitle}>{mod.title}</h2>
               <p style={s.modCardSub}>{mod.subtitle}</p>
+              <div style={s.modCardProgressBar}>
+                <div style={{
+                  height: '100%',
+                  borderRadius: 2,
+                  width: `${mp.percent}%`,
+                  background: mod.color,
+                  transition: 'width 0.3s ease',
+                }} />
+              </div>
               <div style={s.modCardFooter}>
                 <span style={{ color: mod.color, fontSize: 12, fontWeight: 500 }}>
-                  {count} concepts
+                  {mp.read} of {mp.total} read
                 </span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={mod.color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="9 18 15 12 9 6" />
@@ -277,10 +316,37 @@ const s = {
     lineHeight: 1.4,
     marginBottom: 12,
   },
+  modCardProgressBar: {
+    width: '100%',
+    height: 3,
+    background: C.border,
+    borderRadius: 2,
+    marginBottom: 10,
+    overflow: 'hidden',
+  },
   modCardFooter: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  moduleProgressWrap: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 12,
+    marginBottom: 20,
+  },
+  moduleProgressBar: {
+    flex: 1,
+    height: 3,
+    background: C.border,
+    borderRadius: 2,
+    overflow: 'hidden',
+  },
+  moduleProgressText: {
+    fontSize: 12,
+    fontWeight: 500,
+    color: C.textDim,
+    whiteSpace: 'nowrap',
   },
   tipCard: {
     background: C.gold + '08',
