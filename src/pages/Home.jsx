@@ -118,6 +118,7 @@ export default function Home() {
               key={mod.id}
               style={{
                 ...s.moduleCard,
+                borderColor: mod.color + '40',
                 animationDelay: `${i * 0.08}s`,
               }}
               className="slide-up"
@@ -125,8 +126,9 @@ export default function Home() {
             >
               <div style={{
                 ...s.moduleNum,
-                background: mod.color + '20',
+                background: mod.color + '25',
                 color: mod.color,
+                border: `1.5px solid ${mod.color}50`,
               }}>
                 {mod.number}
               </div>
@@ -368,8 +370,8 @@ const s = {
     alignItems: 'center',
     gap: 14,
     padding: '14px 16px',
-    background: C.surface,
-    border: `1px solid ${C.border}`,
+    background: C.surfaceAlt,
+    border: `1.5px solid`,
     borderRadius: 12,
     cursor: 'pointer',
     textAlign: 'left',
@@ -412,10 +414,11 @@ const s = {
     marginTop: 16,
   },
   principleCard: {
-    background: C.surface,
-    border: `1px solid ${C.border}`,
-    borderRadius: 12,
-    padding: '16px 14px',
+    background: 'transparent',
+    border: 'none',
+    borderLeft: `3px solid ${C.gold}50`,
+    borderRadius: 0,
+    padding: '10px 14px',
   },
   principleTitle: {
     fontSize: 14,
