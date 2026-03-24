@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#080e1e"/>
+
+  <!-- Subtle grid pattern -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1c2d52" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#grid)" opacity="0.4"/>
+
+  <!-- Upward trend line in background -->
+  <polyline points="0,500 200,460 400,420 500,350 650,300 800,200 1000,150 1200,80"
+    fill="none" stroke="#1b2a7d" stroke-width="3" opacity="0.4"/>
+  <polyline points="0,500 200,460 400,420 500,350 650,300 800,200 1000,150 1200,80"
+    fill="none" stroke="#e8762a" stroke-width="2" opacity="0.15" stroke-dasharray="8 4"/>
+
+  <!-- Orange accent line at top -->
+  <rect x="0" y="0" width="1200" height="4" fill="#e8762a"/>
+
+  <!-- School badge area -->
+  <circle cx="160" cy="315" r="80" fill="none" stroke="#e8762a" stroke-width="4"/>
+  <circle cx="160" cy="315" r="65" fill="#1b2a7d"/>
+
+  <!-- Mini trend line inside circle -->
+  <polyline points="110,340 130,330 145,320 160,300 175,285 195,270"
+    fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="182,272 195,270 193,283"
+    fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Text -->
+  <text x="290" y="255" font-family="Georgia, serif" font-size="52" font-weight="700" fill="#f5f7fa">
+    Young Investors Society
+  </text>
+  <text x="290" y="310" font-family="Georgia, serif" font-size="28" fill="#e8762a" font-weight="600">
+    West Point High School
+  </text>
+
+  <!-- Tagline -->
+  <text x="290" y="370" font-family="Inter, sans-serif" font-size="22" fill="#9aa5b8">
+    Learn the language of investing. Build the habits that create wealth.
+  </text>
+
+  <!-- Bottom bar with features -->
+  <rect x="0" y="500" width="1200" height="130" fill="#0d1529"/>
+  <rect x="0" y="500" width="1200" height="1" fill="#1c2d52"/>
+
+  <text x="120" y="555" font-family="Inter, sans-serif" font-size="16" fill="#9aa5b8" text-anchor="middle">6 Modules</text>
+  <text x="120" y="580" font-family="Inter, sans-serif" font-size="14" fill="#5e6f88" text-anchor="middle">79 Concepts</text>
+
+  <text x="360" y="555" font-family="Inter, sans-serif" font-size="16" fill="#9aa5b8" text-anchor="middle">Simulator</text>
+  <text x="360" y="580" font-family="Inter, sans-serif" font-size="14" fill="#5e6f88" text-anchor="middle">Real S&amp;P 500 Data</text>
+
+  <text x="600" y="555" font-family="Inter, sans-serif" font-size="16" fill="#9aa5b8" text-anchor="middle">Bull or Bear</text>
+  <text x="600" y="580" font-family="Inter, sans-serif" font-size="14" fill="#5e6f88" text-anchor="middle">127 Questions</text>
+
+  <text x="840" y="555" font-family="Inter, sans-serif" font-size="16" fill="#9aa5b8" text-anchor="middle">Glossary</text>
+  <text x="840" y="580" font-family="Inter, sans-serif" font-size="14" fill="#5e6f88" text-anchor="middle">Every Term Explained</text>
+
+  <text x="1080" y="555" font-family="Inter, sans-serif" font-size="16" fill="#9aa5b8" text-anchor="middle">Charts</text>
+  <text x="1080" y="580" font-family="Inter, sans-serif" font-size="14" fill="#5e6f88" text-anchor="middle">51 Visual Aids</text>
+</svg>

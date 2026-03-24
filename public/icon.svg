@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background circle — school orange ring -->
+  <circle cx="256" cy="256" r="256" fill="#1b2a7d"/>
+  <circle cx="256" cy="256" r="230" fill="none" stroke="#e8762a" stroke-width="24"/>
+
+  <!-- Stylized upward trending chart line — investing growth -->
+  <polyline points="100,340 180,310 240,280 300,220 360,180 420,120"
+    fill="none" stroke="#ffffff" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Arrow head at end of trend line -->
+  <polyline points="385,125 420,120 415,155"
+    fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Dollar sign in the center-left area -->
+  <text x="170" y="400" font-family="Georgia, serif" font-size="80" font-weight="700" fill="#e8762a" text-anchor="middle">YIS</text>
+</svg>
