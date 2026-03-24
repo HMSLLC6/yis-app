@@ -137,7 +137,7 @@ const s = {
   },
   title: {
     fontFamily: font.heading,
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: 700,
     color: C.text,
     lineHeight: 1.15,
@@ -180,6 +180,7 @@ const s = {
   },
   actions: {
     display: 'flex',
+    flexDirection: 'column',
     gap: 10,
     marginBottom: 32,
   },
@@ -279,7 +280,7 @@ const s = {
   },
   principleGrid: {
     display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
     gap: 10,
     marginTop: 16,
   },

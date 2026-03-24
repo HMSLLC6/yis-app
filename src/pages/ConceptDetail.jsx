@@ -252,7 +252,8 @@ const s = {
     background: 'none',
     border: 'none',
     cursor: 'pointer',
-    padding: '8px 0',
+    padding: '10px 4px',
+    minHeight: 44,
   },
   pageNum: {
     fontSize: 12,
@@ -306,7 +307,7 @@ const s = {
   },
   term: {
     fontFamily: font.heading,
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 700,
     color: C.text,
     lineHeight: 1.2,
@@ -458,5 +459,9 @@ const s = {
     fontWeight: 500,
     color: C.text,
     lineHeight: 1.3,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    maxWidth: '100%',
   },
 };

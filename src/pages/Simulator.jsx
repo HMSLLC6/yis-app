@@ -4,9 +4,9 @@ import { C, font, fmt } from '../theme';
 import { calculateGrowth, HISTORICAL_AVG_RETURN, BUFFETT_QUOTES } from '../data/sp500';
 
 const TABS = [
-  { id: 'birthday', label: 'Birthday Investor' },
+  { id: 'birthday', label: 'Birthday' },
   { id: 'future', label: 'Future Builder' },
-  { id: 'buffett', label: 'The Buffett Bet' },
+  { id: 'buffett', label: 'Buffett Bet' },
 ];
 
 export default function Simulator() {
@@ -573,8 +573,8 @@ const s = {
     paddingBottom: 4,
   },
   tab: {
-    padding: '8px 14px',
-    fontSize: 13,
+    padding: '7px 10px',
+    fontSize: 12,
     fontWeight: 500,
     borderRadius: 8,
     border: '1px solid',
@@ -693,7 +693,7 @@ const s = {
   },
   resultValue: {
     fontFamily: font.heading,
-    fontSize: 36,
+    fontSize: 28,
     fontWeight: 700,
     color: C.green,
   },
@@ -720,6 +720,8 @@ const s = {
     fontFamily: font.mono,
     fontSize: 14,
     fontWeight: 600,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
   chartCard: {
     background: C.surface,

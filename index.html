@@ -10,6 +10,35 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <script>
+      // Disable right-click context menu
+      document.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+      });
+      // Detect and prevent common DevTools keyboard shortcuts
+      document.addEventListener('keydown', function (e) {
+        // F12
+        if (e.key === 'F12') {
+          e.preventDefault();
+          return false;
+        }
+        // Ctrl+Shift+I / Cmd+Option+I (Inspector)
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'I') {
+          e.preventDefault();
+          return false;
+        }
+        // Ctrl+Shift+J / Cmd+Option+J (Console)
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'J') {
+          e.preventDefault();
+          return false;
+        }
+        // Ctrl+U / Cmd+U (View Source)
+        if ((e.ctrlKey || e.metaKey) && e.key === 'u') {
+          e.preventDefault();
+          return false;
+        }
+      });
+    </script>
   </head>
   <body>
     <div id="root"></div>

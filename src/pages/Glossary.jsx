@@ -96,7 +96,7 @@ export default function Glossary() {
             }}
             onClick={() => setActiveModule(activeModule === m.id ? null : m.id)}
           >
-            {m.number}. {m.title}
+            M{m.number}
           </button>
         ))}
       </div>
@@ -189,7 +189,7 @@ const s = {
     background: 'none',
     border: 'none',
     cursor: 'pointer',
-    padding: 4,
+    padding: 10,
     display: 'flex',
     alignItems: 'center',
   },
@@ -232,7 +232,8 @@ const s = {
     gap: 12,
     width: '100%',
     textAlign: 'left',
-    padding: '12px 0',
+    minHeight: 44,
+    padding: '14px 0',
     borderBottom: `1px solid ${C.border}20`,
     cursor: 'pointer',
     background: 'none',

@@ -114,7 +114,7 @@ function RiskReturn() {
     { name: 'Savings', risk: 1, ret: 4, color: C.blue },
     { name: 'Bonds', risk: 2, ret: 5, color: '#6366f1' },
     { name: 'S&P 500', risk: 4, ret: 10, color: C.green },
-    { name: 'Growth Stock', risk: 6, ret: 15, color: C.gold },
+    { name: 'Growth', risk: 6, ret: 15, color: C.gold },
     { name: 'Startup', risk: 9, ret: 30, color: C.red },
   ];
   return (
@@ -220,7 +220,7 @@ function IncomeFlow() {
       <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
         {steps.map(step => (
           <div key={step.label} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span style={{ fontSize: 11, color: C.textDim, width: 90, textAlign: 'right', flexShrink: 0 }}>{step.label}</span>
+            <span style={{ fontSize: 11, color: C.textDim, width: 70, textAlign: 'right', flexShrink: 0 }}>{step.label}</span>
             <div style={{ flex: 1, height: 20, background: C.border, borderRadius: 4, overflow: 'hidden' }}>
               <div style={{
                 width: `${(Math.abs(step.value) / maxVal) * 100}%`,
@@ -229,7 +229,7 @@ function IncomeFlow() {
                 borderRadius: 4,
               }} />
             </div>
-            <span style={{ fontSize: 12, fontFamily: font.mono, color: step.color, width: 48, flexShrink: 0 }}>
+            <span style={{ fontSize: 12, fontFamily: font.mono, color: step.color, width: 42, flexShrink: 0 }}>
               ${Math.abs(step.value)}B
             </span>
           </div>
@@ -435,9 +435,9 @@ function ActivePassive() {
 function StockVsBond() {
   const rows = [
     { label: 'You are a...', stock: 'Owner', bond: 'Lender' },
-    { label: 'Returns via', stock: 'Dividends + Price gains', bond: 'Interest payments' },
+    { label: 'Returns via', stock: 'Divs + Price', bond: 'Interest' },
     { label: 'Risk level', stock: 'Higher', bond: 'Lower' },
-    { label: 'Upside', stock: 'Unlimited', bond: 'Capped at interest' },
+    { label: 'Upside', stock: 'Unlimited', bond: 'Capped' },
     { label: 'Bankruptcy', stock: 'Paid last', bond: 'Paid first' },
   ];
   return (
@@ -632,7 +632,7 @@ function PortfolioAllocation() {
 function FundComparison() {
   const rows = [
     { label: 'Trades during day?', stock: 'Yes', mf: 'No', etf: 'Yes' },
-    { label: 'Managed by person?', stock: '—', mf: 'Yes', etf: 'Usually no' },
+    { label: 'Managed by person?', stock: '—', mf: 'Yes', etf: 'Rarely' },
     { label: 'Diversified?', stock: 'No (1 stock)', mf: 'Yes', etf: 'Yes' },
     { label: 'Typical fees', stock: '$0', mf: '0.5-1.5%', etf: '0.03-0.2%' },
   ];
@@ -644,7 +644,7 @@ function FundComparison() {
           <tr>
             <th style={{ ...s.th, width: '30%' }}></th>
             <th style={s.th}>Stock</th>
-            <th style={s.th}>Mutual Fund</th>
+            <th style={s.th}>MF</th>
             <th style={s.th}>ETF</th>
           </tr>
         </thead>
@@ -1224,7 +1224,7 @@ function CareerMap() {
       <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
         {paths.map(p => (
           <div key={p.name} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 8px', borderRadius: 6, borderLeft: `3px solid ${p.color}` }}>
-            <span style={{ fontSize: 11, fontWeight: 600, color: p.color, width: 66, flexShrink: 0 }}>{p.name}</span>
+            <span style={{ fontSize: 11, fontWeight: 600, color: p.color, width: 56, flexShrink: 0 }}>{p.name}</span>
             <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
               {p.roles.map(r => (
                 <span key={r} style={{ fontSize: 10, color: C.textDim, background: C.surfaceAlt, padding: '2px 6px', borderRadius: 4 }}>{r}</span>
@@ -1250,8 +1250,8 @@ function IBTimeline() {
       <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
         {steps.map((st, i) => (
           <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 10px', borderRadius: 6, borderLeft: `3px solid ${st.color}`, background: st.color + '08' }}>
-            <span style={{ fontFamily: font.mono, fontSize: 10, color: st.color, width: 48, flexShrink: 0 }}>{st.year}</span>
-            <span style={{ fontSize: 12, fontWeight: 600, color: C.text, width: 80, flexShrink: 0 }}>{st.role}</span>
+            <span style={{ fontFamily: font.mono, fontSize: 10, color: st.color, width: 40, flexShrink: 0 }}>{st.year}</span>
+            <span style={{ fontSize: 12, fontWeight: 600, color: C.text, width: 70, flexShrink: 0 }}>{st.role}</span>
             <span style={{ fontSize: 10, color: C.muted }}>{st.desc}</span>
           </div>
         ))}
@@ -1388,10 +1388,10 @@ const s = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: '8px 12px',
+    padding: '6px 8px',
     borderRadius: 8,
     border: '1px solid',
-    minWidth: 70,
+    minWidth: 56,
   },
   eqTitle: {
     fontSize: 10,
@@ -1401,14 +1401,14 @@ const s = {
   },
   eqVal: {
     fontFamily: font.mono,
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: 700,
     color: C.text,
     marginTop: 2,
   },
   eqSign: {
     fontFamily: font.mono,
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: 700,
     color: C.muted,
   },

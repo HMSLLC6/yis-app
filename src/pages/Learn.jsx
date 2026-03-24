@@ -162,7 +162,8 @@ const s = {
     background: 'none',
     border: 'none',
     cursor: 'pointer',
-    padding: '8px 0',
+    padding: '10px 4px',
+    minHeight: 44,
     marginBottom: 16,
   },
   moduleHeader: {
@@ -185,7 +186,7 @@ const s = {
   },
   moduleTitle: {
     fontFamily: font.heading,
-    fontSize: 22,
+    fontSize: 19,
     fontWeight: 700,
     color: C.text,
     marginBottom: 2,
