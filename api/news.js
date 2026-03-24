@@ -32,11 +32,25 @@ const FEEDS = [
   },
 ];
 
+// Decode HTML entities that come through in RSS text
+function decodeEntities(str) {
+  return str
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&#39;/g, "'")
+    .replace(/&#x27;/g, "'")
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(n))
+    .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCharCode(parseInt(n, 16)));
+}
+
 // Simple XML value extractor (no dependencies needed)
 function extractTag(xml, tag) {
   const regex = new RegExp(`<${tag}[^>]*><!\\[CDATA\\[([\\s\\S]*?)\\]\\]></${tag}>|<${tag}[^>]*>([^<]*)</${tag}>`);
   const match = xml.match(regex);
-  return match ? (match[1] || match[2] || '').trim() : '';
+  return match ? decodeEntities((match[1] || match[2] || '').trim()) : '';
 }
 
 function extractAttr(xml, tag, attr) {
