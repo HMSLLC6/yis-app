@@ -80,14 +80,16 @@ function BirthdayInvestor() {
 
         <div style={s.inputGroup}>
           <label style={s.label}>Your Birthday</label>
-          <input
-            type="date"
-            value={birthday}
-            onChange={(e) => setBirthday(e.target.value)}
-            style={s.input}
-            max={new Date().toISOString().split('T')[0]}
-            min="1950-01-01"
-          />
+          <div style={s.dollarInput}>
+            <input
+              type="date"
+              value={birthday}
+              onChange={(e) => setBirthday(e.target.value)}
+              style={s.inputNoBorder}
+              max={new Date().toISOString().split('T')[0]}
+              min="1950-01-01"
+            />
+          </div>
         </div>
 
         <div style={s.inputGroup}>
