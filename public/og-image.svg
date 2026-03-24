@@ -10,11 +10,11 @@
   </defs>
   <rect width="1200" height="630" fill="url(#grid)" opacity="0.4"/>
 
-  <!-- Upward trend line in background -->
-  <polyline points="0,500 200,460 400,420 500,350 650,300 800,200 1000,150 1200,80"
-    fill="none" stroke="#1b2a7d" stroke-width="3" opacity="0.4"/>
-  <polyline points="0,500 200,460 400,420 500,350 650,300 800,200 1000,150 1200,80"
-    fill="none" stroke="#e8762a" stroke-width="2" opacity="0.15" stroke-dasharray="8 4"/>
+  <!-- Sharp angular trend line in background -->
+  <polyline points="0,480 200,460 350,470 500,380 650,320 780,340 900,200 1050,120 1200,60"
+    fill="none" stroke="#1b2a7d" stroke-width="3" opacity="0.4" stroke-linejoin="miter" stroke-linecap="square"/>
+  <polyline points="0,480 200,460 350,470 500,380 650,320 780,340 900,200 1050,120 1200,60"
+    fill="none" stroke="#e8762a" stroke-width="2" opacity="0.15" stroke-dasharray="8 4" stroke-linejoin="miter"/>
 
   <!-- Orange accent line at top -->
   <rect x="0" y="0" width="1200" height="4" fill="#e8762a"/>
@@ -23,11 +23,11 @@
   <circle cx="160" cy="315" r="80" fill="none" stroke="#e8762a" stroke-width="4"/>
   <circle cx="160" cy="315" r="65" fill="#1b2a7d"/>
 
-  <!-- Mini trend line inside circle -->
-  <polyline points="110,340 130,330 145,320 160,300 175,285 195,270"
-    fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-  <polyline points="182,272 195,270 193,283"
-    fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Sharp mini trend line inside circle -->
+  <polyline points="110,345 135,335 150,340 165,305 185,275 200,260"
+    fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"/>
+  <polygon points="200,260 188,275 192,280 200,260" fill="#ffffff"/>
+  <polygon points="200,260 208,274 212,268 200,260" fill="#ffffff"/>
 
   <!-- Text -->
   <text x="290" y="255" font-family="Georgia, serif" font-size="52" font-weight="700" fill="#f5f7fa">
