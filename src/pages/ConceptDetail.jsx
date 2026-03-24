@@ -166,7 +166,10 @@ export default function ConceptDetail() {
                 return (
                   <button
                     key={rc.id}
-                    style={s.relatedCard}
+                    style={{
+                      ...s.relatedCard,
+                      borderColor: (rcMod?.color || C.blue) + '50',
+                    }}
                     onClick={() => goTo(rc.id)}
                   >
                     <div style={{
