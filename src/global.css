@@ -11,7 +11,7 @@ html {
 html, body, #root {
   height: 100%;
   background: #080e1e;
-  color: #f5f7fa;
+  color: #ffffff;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

@@ -12,10 +12,10 @@ export const C = {
   border: '#1c2d52',
   borderHi: '#263d6a',
 
-  // Text — brighter white for readability on dark bg
-  text: '#f5f7fa',
-  textDim: '#9aa5b8',
-  muted: '#5e6f88',
+  // Text — white throughout for readability on dark bg
+  text: '#ffffff',
+  textDim: '#dce1ea',
+  muted: '#8896aa',
 
   // Brand — West Point Royal Blue & Orange
   navy: '#1b2a7d',
