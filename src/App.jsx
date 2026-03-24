@@ -12,7 +12,10 @@ import Glossary from './pages/Glossary';
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
+    // Force scroll on all possible containers — Safari sometimes ignores window.scrollTo
     window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
   }, [pathname]);
   return null;
 }
