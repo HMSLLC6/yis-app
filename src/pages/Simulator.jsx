@@ -551,6 +551,7 @@ const s = {
     maxWidth: 600,
     margin: '0 auto',
     padding: '20px 16px',
+    overflow: 'hidden',
   },
   title: {
     fontFamily: font.heading,
@@ -587,8 +588,9 @@ const s = {
     background: C.surface,
     border: `1px solid ${C.border}`,
     borderRadius: 16,
-    padding: '20px 18px',
+    padding: '18px 14px',
     marginBottom: 16,
+    overflow: 'hidden',
   },
   cardTitle: {
     fontFamily: font.heading,
@@ -627,6 +629,7 @@ const s = {
     color: C.text,
     fontSize: 15,
     fontFamily: font.mono,
+    boxSizing: 'border-box',
   },
   dollarInput: {
     display: 'flex',
@@ -635,6 +638,7 @@ const s = {
     border: `1px solid ${C.border}`,
     borderRadius: 8,
     padding: '0 12px',
+    boxSizing: 'border-box',
   },
   dollarSign: {
     color: C.muted,
@@ -678,8 +682,9 @@ const s = {
     background: C.surface,
     border: `1px solid ${C.green}30`,
     borderRadius: 16,
-    padding: '20px 18px',
+    padding: '18px 14px',
     marginBottom: 16,
+    overflow: 'hidden',
   },
   resultHeader: {
     textAlign: 'center',
@@ -727,8 +732,9 @@ const s = {
     background: C.surface,
     border: `1px solid ${C.border}`,
     borderRadius: 16,
-    padding: '16px 8px',
+    padding: '14px 6px',
     marginBottom: 16,
+    overflow: 'hidden',
   },
   resultGrid: {
     display: 'grid',
