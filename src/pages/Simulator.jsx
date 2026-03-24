@@ -28,9 +28,9 @@ export default function Simulator() {
             key={t.id}
             style={{
               ...s.tab,
-              background: tab === t.id ? C.gold + '20' : 'transparent',
-              color: tab === t.id ? C.gold : C.muted,
-              borderColor: tab === t.id ? C.gold + '40' : C.border,
+              background: tab === t.id ? C.gold + '20' : C.surface,
+              color: tab === t.id ? C.gold : C.textDim,
+              borderColor: tab === t.id ? C.gold + '50' : C.borderHi,
             }}
             onClick={() => setTab(t.id)}
           >
