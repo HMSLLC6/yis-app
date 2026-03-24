@@ -1,16 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <!-- Background circle — school blue with orange ring -->
   <circle cx="256" cy="256" r="256" fill="#1b2a7d"/>
-  <circle cx="256" cy="256" r="230" fill="none" stroke="#e8762a" stroke-width="24"/>
+  <circle cx="256" cy="256" r="232" fill="none" stroke="#e8762a" stroke-width="20"/>
 
-  <!-- Sharp angular stock trend line — decisive upward movement -->
-  <polyline points="80,320 160,300 200,330 260,240 320,200 370,100"
-    fill="none" stroke="#ffffff" stroke-width="22" stroke-linecap="square" stroke-linejoin="miter"/>
-
-  <!-- Arrow head — sharp, triangular -->
-  <polygon points="370,100 340,130 355,135 370,100" fill="#ffffff"/>
-  <polygon points="370,100 395,120 400,105 370,100" fill="#ffffff"/>
+  <!-- Stock chart arrow (adapted from UXWing chart-arrow-up, public domain) -->
+  <g transform="translate(120, 100) scale(2.2)" fill="#ffffff">
+    <path d="M26.89,62.71l23.26-22.74c5.76,5.76,11.46,11.46,17.28,17.21l15.41-15.6
+      l-7.15-7.15l20.12-0.18v20.29l-6.87-6.87c-7.16,7.25-14.29,14.48-21.47,21.67
+      L50.03,52.12L32.99,68.81L26.89,62.71z"/>
+  </g>
 
   <!-- YIS text -->
-  <text x="180" y="410" font-family="Georgia, serif" font-size="80" font-weight="700" fill="#e8762a" text-anchor="middle">YIS</text>
+  <text x="256" y="420" font-family="Georgia, serif" font-size="80" font-weight="700" fill="#e8762a" text-anchor="middle">YIS</text>
 </svg>

@@ -23,11 +23,12 @@
   <circle cx="160" cy="315" r="80" fill="none" stroke="#e8762a" stroke-width="4"/>
   <circle cx="160" cy="315" r="65" fill="#1b2a7d"/>
 
-  <!-- Sharp mini trend line inside circle -->
-  <polyline points="110,345 135,335 150,340 165,305 185,275 200,260"
-    fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"/>
-  <polygon points="200,260 188,275 192,280 200,260" fill="#ffffff"/>
-  <polygon points="200,260 208,274 212,268 200,260" fill="#ffffff"/>
+  <!-- Stock chart arrow inside circle (UXWing, public domain) -->
+  <g transform="translate(112, 280) scale(0.7)" fill="#ffffff">
+    <path d="M26.89,62.71l23.26-22.74c5.76,5.76,11.46,11.46,17.28,17.21l15.41-15.6
+      l-7.15-7.15l20.12-0.18v20.29l-6.87-6.87c-7.16,7.25-14.29,14.48-21.47,21.67
+      L50.03,52.12L32.99,68.81L26.89,62.71z"/>
+  </g>
 
   <!-- Text -->
   <text x="290" y="255" font-family="Georgia, serif" font-size="52" font-weight="700" fill="#f5f7fa">
