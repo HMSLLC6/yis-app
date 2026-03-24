@@ -14,6 +14,22 @@ const FEEDS = [
     url: 'https://feeds.reuters.com/reuters/businessNews',
     source: 'Reuters',
   },
+  {
+    url: 'https://www.investopedia.com/feedbuilder/feed/getfeed/?feedName=rss_headline',
+    source: 'Investopedia',
+  },
+  {
+    url: 'https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGx6TVdZU0FtVnVHZ0pWVXlnQVAB?hl=en-US&gl=US&ceid=US:en',
+    source: 'Google News',
+  },
+  {
+    url: 'https://feeds.feedburner.com/APNewsBusinessHeadlines',
+    source: 'AP News',
+  },
+  {
+    url: 'https://www.fool.com/feeds/index.aspx',
+    source: 'Motley Fool',
+  },
 ];
 
 // Simple XML value extractor (no dependencies needed)
@@ -122,8 +138,8 @@ export default async function handler(req, res) {
       return true;
     });
 
-    // Fetch og:images for articles missing images (up to 8 at a time)
-    const needImages = articles.filter(a => !a.image).slice(0, 8);
+    // Fetch og:images for articles missing images (up to 12 at a time)
+    const needImages = articles.filter(a => !a.image).slice(0, 12);
     if (needImages.length > 0) {
       const ogResults = await Promise.all(
         needImages.map(a => fetchOgImage(a.url))
@@ -133,10 +149,10 @@ export default async function handler(req, res) {
       });
     }
 
-    // Return top 20 with images prioritized
+    // Return top 30 with images prioritized
     const withImages = articles.filter(a => a.image);
     const withoutImages = articles.filter(a => !a.image);
-    const final = [...withImages, ...withoutImages].slice(0, 20);
+    const final = [...withImages, ...withoutImages].slice(0, 30);
 
     res.status(200).json({ articles: final });
   } catch (err) {
