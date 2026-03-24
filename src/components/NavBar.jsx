@@ -71,7 +71,12 @@ export default function NavBar() {
         return (
           <button
             key={tab.path}
-            onClick={() => navigate(tab.path)}
+            onClick={() => {
+              navigate(tab.path);
+              window.scrollTo(0, 0);
+              document.documentElement.scrollTop = 0;
+              document.body.scrollTop = 0;
+            }}
             style={{
               ...s.tab,
               color: active ? C.gold : C.muted,
