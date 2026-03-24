@@ -1302,10 +1302,12 @@ function MAProcess() {
 // === STYLES ===
 const s = {
   wrapper: {
-    background: C.surface,
-    border: `1px solid ${C.border}`,
-    borderRadius: 12,
-    padding: '14px 16px',
+    background: 'transparent',
+    border: 'none',
+    borderTop: `1px solid ${C.border}50`,
+    borderBottom: `1px solid ${C.border}50`,
+    borderRadius: 0,
+    padding: '16px 0',
     marginBottom: 14,
   },
   label: {
