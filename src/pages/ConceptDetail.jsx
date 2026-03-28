@@ -16,6 +16,8 @@ export default function ConceptDetail() {
   // Scroll to top when concept changes (same component re-renders, not unmounts)
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
   }, [conceptId]);
 
   // Auto-mark as read after 3 seconds on the page

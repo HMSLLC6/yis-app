@@ -1,3 +1,4 @@
+import { useLayoutEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { C, font } from '../theme';
 import { MODULES, CONCEPTS } from '../data/concepts';
@@ -7,6 +8,11 @@ export default function Learn() {
   const { moduleId } = useParams();
   const navigate = useNavigate();
   const { readConcepts, getModuleProgress } = useProgress();
+
+  // Scroll to top when switching between module list and module detail
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [moduleId]);
 
   // If a module is selected, show its concepts
   const activeModule = MODULES.find(m => m.id === moduleId);
