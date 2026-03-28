@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Home from './pages/Home';
@@ -9,19 +9,16 @@ import Simulator from './pages/Simulator';
 import Game from './pages/Game';
 import Glossary from './pages/Glossary';
 
+// Prevent browser from restoring scroll position on navigation
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+
 function ScrollToTop() {
   const { pathname } = useLocation();
-  useEffect(() => {
-    // Immediate scroll
+  // useLayoutEffect runs synchronously before paint — no flash of wrong scroll position
+  useLayoutEffect(() => {
     window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-    // Safari sometimes needs a frame delay after route render
-    requestAnimationFrame(() => {
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    });
   }, [pathname]);
   return null;
 }

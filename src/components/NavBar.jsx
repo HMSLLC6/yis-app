@@ -73,9 +73,6 @@ export default function NavBar() {
             key={tab.path}
             onClick={() => {
               navigate(tab.path);
-              window.scrollTo(0, 0);
-              document.documentElement.scrollTop = 0;
-              document.body.scrollTop = 0;
             }}
             style={{
               ...s.tab,

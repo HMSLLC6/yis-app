@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from 'react';
+import { useMemo, useEffect, useLayoutEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { C, font } from '../theme';
 import { CONCEPTS, CONCEPT_MAP, MODULES } from '../data/concepts';
@@ -12,6 +12,11 @@ export default function ConceptDetail() {
   const concept = CONCEPT_MAP[conceptId];
   const { readConcepts, markRead } = useProgress();
   const isRead = readConcepts.includes(conceptId);
+
+  // Scroll to top when concept changes (same component re-renders, not unmounts)
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [conceptId]);
 
   // Auto-mark as read after 3 seconds on the page
   useEffect(() => {
@@ -58,12 +63,10 @@ export default function ConceptDetail() {
   // Pass current concept as "from" so the destination knows where we came from
   const goTo = (id) => {
     navigate(`/concept/${id}`, { state: { from: conceptId } });
-    window.scrollTo(0, 0);
   };
 
   const goBack = () => {
     navigate(`/concept/${cameFrom.id}`, { state: location.state?.parentFrom ? { from: location.state.parentFrom } : undefined });
-    window.scrollTo(0, 0);
   };
 
   return (
