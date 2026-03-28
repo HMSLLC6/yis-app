@@ -275,7 +275,7 @@ function PEComparison() {
   return (
     <div>
       <p style={s.label}>P/E Ratios — what investors pay per $1 of profit</p>
-      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: 20, height: 120, marginBottom: 8 }}>
+      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: 20, height: 130, marginBottom: 8 }}>
         {data.map(d => (
           <div key={d.name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
             <span style={{ fontFamily: font.mono, fontSize: 14, fontWeight: 700, color: d.color }}>{d.pe}x</span>
@@ -767,7 +767,7 @@ function TimeValueMoney() {
   return (
     <div>
       <p style={s.label}>$1,000 today vs $1,000 in the future</p>
-      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: 16, height: 100 }}>
+      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: 16, height: 120 }}>
         {[
           { label: 'Today', value: 1000, height: 90, color: C.green },
           { label: 'In 5 yrs', value: 621, height: 56, color: C.gold },
@@ -1008,7 +1008,7 @@ function InflationTimeline() {
   return (
     <div>
       <p style={s.label}>US inflation rate — the 2022 spike</p>
-      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-around', height: 90, marginBottom: 4 }}>
+      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-around', height: 100, marginBottom: 4 }}>
         {data.map(d => (
           <div key={d.year} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
             <span style={{ fontFamily: font.mono, fontSize: 10, fontWeight: 600, color: d.rate > 4 ? C.red : C.green }}>{d.rate}%</span>
@@ -1150,7 +1150,7 @@ function AlphaBeta() {
   return (
     <div>
       <p style={s.label}>Beta — volatility relative to the market</p>
-      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: 20, height: 90, marginBottom: 4 }}>
+      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: 20, height: 105, marginBottom: 4 }}>
         {data.map(d => (
           <div key={d.name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
             <span style={{ fontFamily: font.mono, fontSize: 13, fontWeight: 700, color: d.color }}>{d.beta}x</span>
@@ -1194,7 +1194,7 @@ function MemeStockChart() {
   return (
     <div>
       <p style={s.label}>GameStop: hype vs reality</p>
-      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: 20, height: 100 }}>
+      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: 20, height: 120 }}>
         {data.map(d => (
           <div key={d.label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
             <span style={{ fontFamily: font.mono, fontSize: 11, fontWeight: 600, color: d.color }}>${d.value}</span>
