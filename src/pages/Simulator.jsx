@@ -220,25 +220,28 @@ function FutureBuilder() {
       { label: 'Aggressive (10%)', rate: HISTORICAL_AVG_RETURN, color: C.green },
     ];
 
-    // Build yearly data for chart using proper monthly compounding
+    // Build yearly data: monthly contributions, annual compounding
     const chartData = [];
+    rates.forEach(r => { r._balance = principal; });
     for (let y = 0; y <= yr; y++) {
       const point = { year: y };
-      const months = y * 12;
       rates.forEach(r => {
-        const monthlyRate = r.rate / 12;
-        // Principal compounded monthly
-        const compoundedPrincipal = principal * Math.pow(1 + monthlyRate, months);
-        // Future value of monthly contributions (annuity)
-        const annuityFV = monthlyRate > 0
-          ? monthlyAdd * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate)
-          : monthlyAdd * months;
-        point[r.label] = Math.round(compoundedPrincipal + annuityFV);
+        point[r.label] = Math.round(r._balance);
       });
-      // Total contributed (no growth)
       point.contributed = principal + (monthlyAdd * 12 * y);
       chartData.push(point);
+      // After recording this year's snapshot, grow into next year
+      if (y < yr) {
+        rates.forEach(r => {
+          // Add 12 monthly contributions throughout the year
+          r._balance += monthlyAdd * 12;
+          // Apply annual return once at end of year
+          r._balance *= (1 + r.rate);
+        });
+      }
     }
+    // Clean up temp balances
+    rates.forEach(r => { delete r._balance; });
 
     return { rates, chartData, years: yr };
   }, [amount, monthly, years]);
